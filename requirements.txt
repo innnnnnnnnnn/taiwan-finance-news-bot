@@ -1,0 +1,6 @@
+feedparser
+requests
+python-dotenv
+apscheduler
+beautifulsoup4
+lxml
