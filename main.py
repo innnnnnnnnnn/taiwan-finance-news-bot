@@ -91,10 +91,16 @@ def fetch_news():
         message = f"<b>{news['title']}</b>\n\n{news['summary']}\n\n<a href='{news['link']}'>閱讀全文 →</a>"
         send_telegram(message)
         print(f'✅ 已推送: {news["title"][:50]}...')
+        time.sleep(3) # 參考 news-pusher，增加延遲避免被 Telegram 阻擋
     
     save_seen(seen_hashes)
 
 if __name__ == '__main__':
-    print(f'🚀 開始抓取台灣財經新聞 - {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
-    fetch_news()
-    print('✅ 當次抓取與推播完成')
+    print(f'🚀 開始抓取台灣財經新聞 - 持續推播模式')
+    while True:
+        print(f'🔄 抓取時間: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        fetch_news()
+        # 抓取完一輪後等待 5 分鐘再抓取下一次
+        interval = int(os.getenv('INTERVAL', 300))
+        print(f'✅ 當次循環完成，等待 {interval} 秒...')
+        time.sleep(interval)
