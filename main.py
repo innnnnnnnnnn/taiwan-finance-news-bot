@@ -19,7 +19,11 @@ RSS_FEEDS = [
     'https://feeds.feedburner.com/moneydj',       # MoneyDJ
     'https://ec.ltn.com.tw/rss/economy.xml',      # 自由時報 經濟
     'https://news.ltn.com.tw/rss/business.xml',   # 自由時報 財經
-    'https://tw.stock.yahoo.com/rss',              # Yahoo 財經
+    'https://tw.stock.yahoo.com/rss',              # Yahoo 股市
+    'https://technews.tw/feed/',                   # 科技新報 TechNews
+    'https://udn.com/rssfeed/news/2/6644?ch=udn',  # 聯合新聞網 財經
+    'https://tw.news.yahoo.com/rss/finance',       # Yahoo 奇摩新聞 財經
+    'https://news.google.com/rss/search?q=台灣股市+OR+台股+OR+半導體+OR+財經&hl=zh-TW&gl=TW&ceid=TW:zh-Hant', # Google 新聞 (台股/財經)
 ]
 
 SEEN_FILE = 'seen.txt'
