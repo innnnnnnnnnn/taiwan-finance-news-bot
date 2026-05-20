@@ -10,8 +10,8 @@ load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('CHAT_ID')
-KEYWORDS = [k.strip() for k in os.getenv('KEYWORDS', '台股,AI,半導體').split(',') if k.strip()]
-INTERVAL = int(os.getenv('INTERVAL', 300))
+KEYWORDS = [k.strip() for k in os.getenv('KEYWORDS', '').split(',') if k.strip()]
+INTERVAL = int(os.getenv('INTERVAL', 60))
 
 RSS_FEEDS = [
     'https://ctee.com.tw/feed',                    # 工商時報
@@ -22,6 +22,11 @@ RSS_FEEDS = [
     'https://tw.stock.yahoo.com/rss',              # Yahoo 股市
     'https://technews.tw/feed/',                   # 科技新報 TechNews
     'https://udn.com/rssfeed/news/2/6644?ch=udn',  # 聯合新聞網 財經
+    'https://money.udn.com/rssfeed/news/1001/5588/5599?ch=money', # 經濟日報 台股
+    'https://www.chinatimes.com/rss/realtimenews-money.xml', # 中時新聞網 財經
+    'https://www.setn.com/ViewRSS.aspx?CategoryID=2', # 三立新聞網 財經
+    'https://news.tvbs.com.tw/rss/news_finance.xml', # TVBS 財經
+    'https://www.businesstoday.com.tw/rss/',       # 今周刊
     'https://tw.news.yahoo.com/rss/finance',       # Yahoo 奇摩新聞 財經
     'https://news.google.com/rss/search?q=台灣股市+OR+台股+OR+半導體+OR+財經&hl=zh-TW&gl=TW&ceid=TW:zh-Hant', # Google 新聞 (台股/財經)
 ]
@@ -63,7 +68,7 @@ def fetch_news():
     for feed_url in RSS_FEEDS:
         try:
             feed = feedparser.parse(feed_url)
-            for entry in feed.entries[:10]:
+            for entry in feed.entries[:50]:
                 title = entry.title
                 link = entry.get('link', '')
                 summary = entry.get('summary', entry.get('description', ''))[:300]
@@ -100,7 +105,7 @@ if __name__ == '__main__':
     while True:
         print(f'🔄 抓取時間: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
         fetch_news()
-        # 抓取完一輪後等待 5 分鐘再抓取下一次
-        interval = int(os.getenv('INTERVAL', 300))
+        # 抓取完一輪後等待 1 分鐘再抓取下一次
+        interval = int(os.getenv('INTERVAL', 60))
         print(f'✅ 當次循環完成，等待 {interval} 秒...')
         time.sleep(interval)
